@@ -4,44 +4,55 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class UserInputs {
-	
-	public static void main(String [] args) {
-		
-		Scanner scanner = new Scanner(System.in);
-		Random random = new Random();
-        int theRandomNumber = random.nextInt(100) + 1;
-        int attempts = 5;
-        
-        System.out.println("Welcome to the Guess the Number game!");
-        System.out.println("I've chosen a random number between 1 and 100. You have 5 attempts to guess it.");
-        
-        while(attempts > 0) {
-        	System.out.print("Pick a number between 1 and 100: ");
-        	int guess;
-        	
-        	try {
-        		guess = Integer.parseInt(scanner.nextLine());
-        	}catch(NumberFormatException e) {
-        		System.out.println("Invalid input. Please enter a valid integer.");
-        		continue;
-        	}
-        	 if (guess < 1 || guess > 100) {
-                 System.out.println("Your guess is not between 1 and 100, please try again.");
-             } else if (guess < theRandomNumber) {
-                 System.out.println("Please pick a higher number");
-             } else if (guess > theRandomNumber) {
-                 System.out.println("Please pick a lower number");
-             } else {
-                 System.out.println("You win!");
-                 break;
-             }
-        	 attempts--;
-        }
-        if (attempts == 0) {
-            System.out.println("You lose! The number to guess was: " + theRandomNumber);
-        }
-        
-		scanner.close();
-	}
 
+    private static final int MAX_ATTEMPTS = 5;
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 100;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int target = new Random().nextInt(MAX_NUMBER) + MIN_NUMBER;
+
+        System.out.printf("🎯 Welcome to Guess the Number!%nI've chosen a number between %d and %d.%nYou have %d attempts.%n%n",
+                MIN_NUMBER, MAX_NUMBER, MAX_ATTEMPTS);
+
+        playGame(scanner, target);
+
+        scanner.close();
+    }
+
+    private static void playGame(Scanner scanner, int target) {
+        for (int attemptsLeft = MAX_ATTEMPTS; attemptsLeft > 0; attemptsLeft--) {
+            int guess = getUserGuess(scanner, attemptsLeft);
+
+            if (guess == target) {
+                System.out.println("🎉 You win!");
+                return;
+            }
+
+            String hint = guess < target ? "Try a higher number." : "Try a lower number.";
+            System.out.println(hint);
+        }
+
+        System.out.printf("💀 You lose! The number was: %d%n", target);
+    }
+
+    private static int getUserGuess(Scanner scanner, int attemptsLeft) {
+        while (true) {
+            System.out.printf("Attempt %d - Enter a number between %d and %d: ",
+                    MAX_ATTEMPTS - attemptsLeft + 1, MIN_NUMBER, MAX_NUMBER);
+
+            String input = scanner.nextLine();
+
+            try {
+                int guess = Integer.parseInt(input);
+                if (guess >= MIN_NUMBER && guess <= MAX_NUMBER) {
+                    return guess;
+                }
+                System.out.printf("⚠️ Please enter a number between %d and %d.%n", MIN_NUMBER, MAX_NUMBER);
+            } catch (NumberFormatException e) {
+                System.out.println("⚠️ Invalid input. Please enter a valid integer.");
+            }
+        }
+    }
 }
