@@ -7,4 +7,8 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="lib/junit-jupiter-api-5.9.2.jar"/>
+	<classpathentry kind="lib" path="lib/junit-jupiter-engine-5.9.2.jar"/>
+	<classpathentry kind="lib" path="lib/junit-platform-engine-1.9.2.jar"/>
+	<classpathentry kind="lib" path="lib/junit-platform-console-standalone-1.9.2.jar"/>
 </classpath>

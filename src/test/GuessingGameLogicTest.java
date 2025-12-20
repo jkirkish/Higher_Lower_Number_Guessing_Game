@@ -1,5 +1,4 @@
-package Guessing_Game;
-
+package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -40,4 +39,3 @@ public class GuessingGameLogicTest {
         assertFalse(game.hasAttemptsRemaining());
     }
 }
-

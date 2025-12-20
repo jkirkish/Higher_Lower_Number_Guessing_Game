@@ -1,4 +1,4 @@
-package Guessing_Game;
+package test;
 
 public class GuessingGameLogic {
 
